@@ -1,3 +1,4 @@
+/* :root и body остаются как в предыдущей версии */
 :root {
     --background-color: #0a0a0a;
     --text-color: #e0e0e0;
@@ -8,10 +9,14 @@
     --border-color: #2a2a2a;
     --highlight-border: #444444;
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --blur-intensity: 6px;
+    --blur-intensity: 5px; /* Немного уменьшим блюр для производительности */
     --global-radius: 6px;
-    --transition-speed: 0.25s;
+    --transition-speed: 0.3s; /* Чуть медленнее для заметности */
+    --animation-duration: 0.6s;
 }
+
+/* ... (существующие стили body, .container, h1-h5, a, img, header, nav и т.д. остаются) ... */
+/* Скопируйте их из предыдущего ответа */
 
 body {
     background-color: var(--background-color);
@@ -142,12 +147,10 @@ nav ul li a.active::after {
 
 section {
     padding: 70px 0;
+    position: relative; /* Для разделителей */
 }
-section:nth-child(even) {
-    background-color: var(--primary-accent);
-}
-section:last-of-type {
-    border-bottom: none;
+section:nth-child(even) { /* Это правило больше не нужно, если разделители будут между всеми секциями */
+    /* background-color: var(--primary-accent); */
 }
 
 section h3 {
@@ -171,20 +174,30 @@ section h3::after {
     border-radius: 1px;
 }
 
+/* Hero Section */
 #hero {
     position: relative;
-    height: 75vh;
-    min-height: 450px;
+    height: 80vh; /* Увеличим немного для canvas */
+    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 0;
     overflow: hidden;
-    background-color: #080808;
+    background-color: #080808; /* Фон под canvas */
 }
 
-#hero::before {
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Под контентом, но над фоном */
+}
+
+#hero::before { /* Фоновое изображение, теперь под canvas */
     content: '';
     position: absolute;
     top: 0;
@@ -194,25 +207,25 @@ section h3::after {
     background-image: url('index/hero-banner.jpg');
     background-size: cover;
     background-position: center;
-    filter: blur(var(--blur-intensity)) grayscale(100%) brightness(0.7);
-    transform: scale(1.05); 
-    z-index: 1;
+    filter: blur(var(--blur-intensity)) grayscale(100%) brightness(0.6); /* Чуть темнее */
+    transform: scale(1.05);
+    z-index: 0; /* Самый нижний слой */
 }
 
-#hero::after {
+#hero::after { /* Градиент для затемнения, теперь над canvas */
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.8) 100%);
-    z-index: 2;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.7) 100%);
+    z-index: 2; /* Над canvas, но под текстом */
 }
 
 .hero-content {
     position: relative;
-    z-index: 3;
+    z-index: 3; /* Текст поверх всего */
     max-width: 700px;
 }
 
@@ -220,7 +233,7 @@ section h3::after {
     font-size: 2.8em;
     margin-bottom: 15px;
     color: #FFFFFF;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.7);
     font-weight: 700;
     letter-spacing: -1px;
 }
@@ -229,9 +242,51 @@ section h3::after {
     font-size: 1.25em;
     color: var(--light-accent);
     font-weight: 300;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 
+/* Section Dividers */
+.section-divider {
+    height: 80px; /* Высота области разделителя */
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: var(--primary-accent); /* Цвет фона для области разделителя */
+}
+.section-divider::before,
+.section-divider::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 200%; /* Шире экрана для наклона */
+    height: 100px; /* Толщина линии */
+    background-color: var(--background-color); /* Цвет линии разделителя (фон основной) */
+}
+.section-divider::before {
+    top: -50px; /* Половина высоты линии, чтобы центр был на границе */
+    transform: translateX(-50%) skewY(-1.5deg);
+}
+/* Альтернативный разделитель */
+.section-divider.alt {
+    background-color: var(--background-color);
+}
+.section-divider.alt::before {
+    background-color: var(--primary-accent);
+    transform: translateX(-50%) skewY(1.5deg); /* Наклон в другую сторону */
+}
+/* Убираем отступы у секций, если между ними есть разделитель */
+.section-divider + section,
+.section-divider.alt + section {
+    padding-top: 0; /* Убираем верхний padding, так как разделитель занимает место */
+}
+section + .section-divider,
+section + .section-divider.alt {
+    margin-top: 0; /* Убираем нижний отступ у секции перед разделителем */
+    /* padding-bottom у секции также можно убрать, если разделитель идет сразу после */
+}
+
+
+/* About Section & others - стили как раньше */
 #about p {
     font-size: 1.1em;
     text-align: center;
@@ -246,6 +301,8 @@ section h3::after {
     font-weight: 500;
 }
 
+
+/* Project Grid, Project Card, Repo Card - стили как раньше */
 .project-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -264,9 +321,15 @@ section h3::after {
     color: var(--text-color);
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
-section:nth-child(even) .project-card,
-section:nth-child(even) .repo-card {
-    background-color: var(--background-color); /* Карточки на более темном фоне, если фон секции светлее */
+/* Если фон секции основной (темный), то карточки светлее */
+section:not(:nth-child(odd)) .project-card, 
+section:not(:nth-child(odd)) .repo-card {
+    background-color: var(--primary-accent);
+}
+/* Если фон секции акцентный (светлее), то карточки темнее */
+section:nth-child(odd) .project-card, 
+section:nth-child(odd) .repo-card {
+     background-color: var(--background-color);
 }
 
 
@@ -360,9 +423,6 @@ section:nth-child(even) .repo-card {
     background-color: var(--tertiary-accent); /* Серый для ЧБ */
     border: 1px solid var(--light-accent); /* Для ЧБ */
 }
-.repo-stars, .repo-forks {
-    font-weight: 500;
-}
 .repo-stars::before { content: "★ "; }
 
 
@@ -396,12 +456,21 @@ section:nth-child(even) .repo-card {
     transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease;
     display: inline-block;
 }
+/* Для кнопки GitHub на светлом фоне секции */
+section:nth-child(odd) .github-profile-link a {
+    background-color: var(--background-color);
+}
+
 .github-profile-link a:hover {
     background-color: var(--secondary-accent);
     border-color: var(--highlight-border);
     transform: translateY(-2px);
 }
+section:nth-child(odd) .github-profile-link a:hover {
+     background-color: var(--primary-accent);
+}
 
+/* News Section - стили как раньше, но с учетом фона секции */
 #news .news-list {
     list-style: none;
     padding: 0;
@@ -415,105 +484,132 @@ section:nth-child(even) .repo-card {
     margin-bottom: 20px;
     border-left: 3px solid var(--tertiary-accent);
     border-radius: 0 var(--global-radius) var(--global-radius) 0;
-    transition: border-left-color var(--transition-speed) ease, background-color var(--transition-speed) ease;
+    transition: border-left-color var(--transition-speed) ease, background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
-section:nth-child(even) #news .news-list li {
+section:nth-child(odd) #news .news-list li {
     background-color: var(--background-color);
 }
 
 #news .news-list li:hover {
     border-left-color: var(--light-accent);
     background-color: var(--secondary-accent);
+    transform: translateX(5px);
 }
-section:nth-child(even) #news .news-list li:hover {
+section:nth-child(odd) #news .news-list li:hover {
     background-color: var(--primary-accent);
 }
 
+.news-date { display: block; font-size: 0.85em; color: var(--tertiary-accent); margin-bottom: 8px; font-weight: 400; }
+.news-title { font-size: 1.2em; margin-bottom: 10px; margin-top: 0; font-weight: 700; }
+#news .news-list li p { margin-bottom: 0; font-weight: 300; color: var(--light-accent); font-size: 0.95em; }
+#news .news-list li p a { color: var(--text-color); font-weight: 500; text-decoration: underline; text-decoration-color: var(--tertiary-accent); text-underline-offset: 3px; }
+#news .news-list li p a:hover { text-decoration-color: var(--light-accent); }
 
-.news-date {
-    display: block;
-    font-size: 0.85em;
-    color: var(--tertiary-accent);
-    margin-bottom: 8px;
-    font-weight: 400;
-}
+/* Contact Section - стили как раньше */
+#contact { text-align: center; }
+#contact p { font-size: 1.1em; color: var(--light-accent); margin-bottom: 25px; }
+.email-link { font-size: 1.2em; font-weight: 500; display: inline-block; padding: 14px 30px; border: 1px solid var(--border-color); border-radius: var(--global-radius); margin: 0 auto 35px auto; background-color: var(--primary-accent); transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease; }
+section:nth-child(odd) .email-link { background-color: var(--background-color); }
+.email-link:hover { background-color: var(--secondary-accent); border-color: var(--highlight-border); color: var(--text-color); transform: translateY(-2px); }
+section:nth-child(odd) .email-link:hover { background-color: var(--primary-accent); }
 
-.news-title {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    margin-top: 0;
-    font-weight: 700;
-}
+.social-links { margin-top: 20px; }
+.social-links a { margin: 0 12px; display: inline-block; color: var(--tertiary-accent); transition: color var(--transition-speed) ease, transform var(--transition-speed) ease; }
+.social-links a svg { width: 26px; height: 26px; vertical-align: middle; }
+.social-links a:hover { color: var(--text-color); transform: scale(1.15); }
 
-#news .news-list li p {
-    margin-bottom: 0;
-    font-weight: 300;
-    color: var(--light-accent);
-    font-size: 0.95em;
-}
-#news .news-list li p a {
-    color: var(--text-color);
-    font-weight: 500;
-    text-decoration: underline;
-    text-decoration-color: var(--tertiary-accent);
-    text-underline-offset: 3px;
-}
-#news .news-list li p a:hover {
-    text-decoration-color: var(--light-accent);
-}
 
-#contact {
-    text-align: center;
+/* Skeleton Loader for GitHub Repos */
+.repo-card.skeleton {
+    pointer-events: none; /* Нельзя кликнуть на скелетон */
 }
-#contact p {
-    font-size: 1.1em;
-    color: var(--light-accent);
-    margin-bottom: 25px;
-}
-
-.email-link {
-    font-size: 1.2em;
-    font-weight: 500;
-    display: inline-block;
-    padding: 14px 30px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--global-radius);
-    margin: 0 auto 35px auto;
-    background-color: var(--primary-accent);
-    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease;
-}
-.email-link:hover {
+.repo-card.skeleton .repo-card-content h4,
+.repo-card.skeleton .repo-card-content p,
+.repo-card.skeleton .repo-meta span {
     background-color: var(--secondary-accent);
-    border-color: var(--highlight-border);
+    color: transparent; /* Скрыть текст, если он случайно есть */
+    border-radius: 3px;
+    animation: pulse-bg 1.5s infinite ease-in-out;
+}
+.repo-card.skeleton .repo-card-content h4 {
+    width: 70%; height: 1.25em; margin-bottom: 12px;
+}
+.repo-card.skeleton .repo-card-content p {
+    width: 100%; height: 0.95em; margin-bottom: 8px;
+}
+.repo-card.skeleton .repo-card-content p:nth-child(2) { width: 80%; }
+.repo-card.skeleton .repo-card-content p:nth-child(3) { width: 90%; height: 0; margin-bottom:0; } /* Скрываем лишние */
+
+.repo-card.skeleton .repo-meta { border-top-color: transparent; }
+.repo-card.skeleton .repo-meta span {
+    width: 20%; height: 0.8em;
+}
+.repo-card.skeleton .repo-meta span:nth-child(2) { width: 25%; }
+.repo-card.skeleton .repo-meta span:nth-child(3) { width: 15%; }
+.repo-card.skeleton .language-color-dot {
+    background-color: var(--secondary-accent) !important; /* Переопределить инлайн стиль */
+    border-color: transparent;
+}
+
+
+@keyframes pulse-bg {
+    0% { background-color: var(--secondary-accent); }
+    50% { background-color: var(--tertiary-accent); }
+    100% { background-color: var(--secondary-accent); }
+}
+
+/* Scroll to Top Button */
+#scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 999;
+    border: none;
+    outline: none;
+    background-color: var(--secondary-accent);
     color: var(--text-color);
+    cursor: pointer;
+    padding: 12px;
+    border-radius: var(--global-radius);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: background-color var(--transition-speed) ease, opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.8;
+}
+#scrollToTopBtn svg {
+    display: block;
+}
+#scrollToTopBtn:hover {
+    background-color: var(--tertiary-accent);
+    opacity: 1;
     transform: translateY(-2px);
 }
 
-.social-links {
-    margin-top: 20px;
+/* Animation Classes for Scroll */
+.animate-on-scroll {
+    opacity: 0;
+    transition-property: opacity, transform;
+    transition-duration: var(--animation-duration);
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Немного 'bouncy' */
 }
-.social-links a {
-    margin: 0 12px;
-    display: inline-block;
-    color: var(--tertiary-accent);
-    transition: color var(--transition-speed) ease, transform var(--transition-speed) ease;
-}
-.social-links a svg {
-    width: 26px;
-    height: 26px;
-    vertical-align: middle;
-}
-.social-links a:hover {
-    color: var(--text-color);
-    transform: scale(1.15);
+.animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: none !important; /* Убираем начальный transform */
 }
 
+.fade-in { transform: scale(0.95); }
+.fade-in-up { transform: translateY(40px); }
+.fade-in-left { transform: translateX(-40px); }
+.zoom-in { transform: scale(0.8); }
+
+/* Footer and other styles - как в предыдущей версии */
 footer {
     text-align: center;
     padding: 40px 0;
-    margin-top: 30px;
+    /* margin-top: 30px; Удален, т.к. последний разделитель будет перед ним */
     background-color: var(--primary-accent);
     border-top: 1px solid var(--border-color);
+    position: relative; /* Для корректного отображения после последнего разделителя */
 }
 
 footer p {
@@ -533,6 +629,7 @@ footer .heart {
     50% { transform: scale(1.15); }
 }
 
+/* Адаптивность как раньше, но может потребоваться коррекция для разделителей и canvas */
 @media (max-width: 992px) {
     .project-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -549,7 +646,7 @@ footer .heart {
     .logo-area {
         margin-bottom: 12px;
         width: 100%;
-        justify-content: space-between; /* Лого слева, тайтл справа, если тайтл есть */
+        justify-content: space-between;
     }
     header .logo { margin-right: 0; }
     .sticky-title { max-width: 150px; text-align: right; }
@@ -563,14 +660,20 @@ footer .heart {
     }
     nav ul li a { font-size: 0.9em; }
 
-    #hero { height: 65vh; min-height: 380px; }
+    #hero { height: 70vh; min-height: 420px; }
     #hero h2 { font-size: 2.3em; }
     #hero .subtitle { font-size: 1.1em; }
 
     section { padding: 60px 0; }
+    .section-divider { height: 60px; }
+    .section-divider::before, .section-divider::after { height: 80px; }
+    .section-divider::before { top: -40px; }
+
+
     section h3 { font-size: 1.9em; margin-bottom: 40px; padding-bottom: 15px; }
     .project-grid { grid-template-columns: 1fr; }
     .social-links a svg { width: 24px; height: 24px; }
+    #scrollToTopBtn { bottom: 20px; right: 20px; padding: 10px; }
 }
 
 @media (max-width: 480px) {
@@ -585,6 +688,9 @@ footer .heart {
     .repo-card .repo-meta { font-size: 0.75em; gap: 6px 10px; }
     .email-link { font-size: 1.1em; padding: 12px 25px; }
     .social-links a svg { width: 22px; height: 22px; }
+    .section-divider { height: 50px; }
+    .section-divider::before, .section-divider::after { height: 70px; }
+    .section-divider::before { top: -35px; }
 }
 
 :focus-visible {
@@ -592,6 +698,6 @@ footer .heart {
     outline-offset: 3px;
     border-radius: var(--global-radius);
 }
-header :focus-visible {
+header :focus-visible, #scrollToTopBtn:focus-visible {
     outline-offset: 1px;
 }
