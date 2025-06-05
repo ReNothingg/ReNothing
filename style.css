@@ -1,4 +1,4 @@
-/* :root и body остаются как в предыдущей версии */
+
 :root {
     --background-color: #0a0a0a;
     --text-color: #e0e0e0;
@@ -9,14 +9,12 @@
     --border-color: #2a2a2a;
     --highlight-border: #444444;
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --blur-intensity: 5px; /* Немного уменьшим блюр для производительности */
+    --blur-intensity: 5px;
     --global-radius: 6px;
-    --transition-speed: 0.3s; /* Чуть медленнее для заметности */
+    --transition-speed: 0.3s;
     --animation-duration: 0.6s;
 }
 
-/* ... (существующие стили body, .container, h1-h5, a, img, header, nav и т.д. остаются) ... */
-/* Скопируйте их из предыдущего ответа */
 
 body {
     background-color: var(--background-color);
@@ -55,7 +53,7 @@ a:hover {
 }
 
 img {
-    filter: grayscale(100%);
+   
     max-width: 100%;
     height: auto;
     display: block;
@@ -144,13 +142,12 @@ nav ul li a.active::after {
     width: 100%;
 }
 
-
 section {
     padding: 70px 0;
-    position: relative; /* Для разделителей */
+    position: relative;
 }
-section:nth-child(even) { /* Это правило больше не нужно, если разделители будут между всеми секциями */
-    /* background-color: var(--primary-accent); */
+section:nth-child(even) {
+     background-color: var(--primary-accent);
 }
 
 section h3 {
@@ -174,10 +171,10 @@ section h3::after {
     border-radius: 1px;
 }
 
-/* Hero Section */
+
 #hero {
     position: relative;
-    height: 80vh; /* Увеличим немного для canvas */
+    height: 80vh;
     min-height: 500px;
     display: flex;
     align-items: center;
@@ -185,7 +182,7 @@ section h3::after {
     text-align: center;
     padding: 0;
     overflow: hidden;
-    background-color: #080808; /* Фон под canvas */
+    background-color: #080808;
 }
 
 #hero-canvas {
@@ -194,10 +191,10 @@ section h3::after {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Под контентом, но над фоном */
+    z-index: 1;
 }
 
-#hero::before { /* Фоновое изображение, теперь под canvas */
+#hero::before {
     content: '';
     position: absolute;
     top: 0;
@@ -207,12 +204,12 @@ section h3::after {
     background-image: url('index/hero-banner.jpg');
     background-size: cover;
     background-position: center;
-    filter: blur(var(--blur-intensity)) grayscale(100%) brightness(0.6); /* Чуть темнее */
+    filter: blur(var(--blur-intensity)) grayscale(100%) brightness(0.6);
     transform: scale(1.05);
-    z-index: 0; /* Самый нижний слой */
+    z-index: 0;
 }
 
-#hero::after { /* Градиент для затемнения, теперь над canvas */
+#hero::after {
     content: '';
     position: absolute;
     top: 0;
@@ -220,12 +217,12 @@ section h3::after {
     width: 100%;
     height: 100%;
     background: linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.7) 100%);
-    z-index: 2; /* Над canvas, но под текстом */
+    z-index: 2;
 }
 
 .hero-content {
     position: relative;
-    z-index: 3; /* Текст поверх всего */
+    z-index: 3;
     max-width: 700px;
 }
 
@@ -245,48 +242,6 @@ section h3::after {
     text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 
-/* Section Dividers */
-.section-divider {
-    height: 80px; /* Высота области разделителя */
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    background-color: var(--primary-accent); /* Цвет фона для области разделителя */
-}
-.section-divider::before,
-.section-divider::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    width: 200%; /* Шире экрана для наклона */
-    height: 100px; /* Толщина линии */
-    background-color: var(--background-color); /* Цвет линии разделителя (фон основной) */
-}
-.section-divider::before {
-    top: -50px; /* Половина высоты линии, чтобы центр был на границе */
-    transform: translateX(-50%) skewY(-1.5deg);
-}
-/* Альтернативный разделитель */
-.section-divider.alt {
-    background-color: var(--background-color);
-}
-.section-divider.alt::before {
-    background-color: var(--primary-accent);
-    transform: translateX(-50%) skewY(1.5deg); /* Наклон в другую сторону */
-}
-/* Убираем отступы у секций, если между ними есть разделитель */
-.section-divider + section,
-.section-divider.alt + section {
-    padding-top: 0; /* Убираем верхний padding, так как разделитель занимает место */
-}
-section + .section-divider,
-section + .section-divider.alt {
-    margin-top: 0; /* Убираем нижний отступ у секции перед разделителем */
-    /* padding-bottom у секции также можно убрать, если разделитель идет сразу после */
-}
-
-
-/* About Section & others - стили как раньше */
 #about p {
     font-size: 1.1em;
     text-align: center;
@@ -302,16 +257,14 @@ section + .section-divider.alt {
 }
 
 
-/* Project Grid, Project Card, Repo Card - стили как раньше */
-.project-grid {
+.project-grid, .game-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
     margin-top: 20px;
 }
 
-.project-card, .repo-card {
-    background-color: var(--primary-accent);
+.project-card, .repo-card, .game-card {
     border: 1px solid var(--border-color);
     border-radius: var(--global-radius);
     overflow: hidden;
@@ -321,23 +274,25 @@ section + .section-divider.alt {
     color: var(--text-color);
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
-/* Если фон секции основной (темный), то карточки светлее */
+
+
 section:not(:nth-child(odd)) .project-card, 
-section:not(:nth-child(odd)) .repo-card {
+section:not(:nth-child(odd)) .repo-card,
+section:not(:nth-child(odd)) .game-card {
     background-color: var(--primary-accent);
 }
-/* Если фон секции акцентный (светлее), то карточки темнее */
 section:nth-child(odd) .project-card, 
-section:nth-child(odd) .repo-card {
+section:nth-child(odd) .repo-card,
+section:nth-child(odd) .game-card {
      background-color: var(--background-color);
 }
 
-
-.project-card:hover, .repo-card:hover {
+.project-card:hover, .repo-card:hover, .game-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.35);
     border-color: var(--highlight-border);
 }
+
 
 .project-image-container {
     width: 100%;
@@ -345,16 +300,17 @@ section:nth-child(odd) .repo-card {
     overflow: hidden;
     background-color: var(--secondary-accent);
 }
-
 .project-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
+    filter: grayscale(100%);
 }
 .project-card:hover .project-image-container img {
     transform: scale(1.05);
 }
+
 
 .project-info {
     padding: 20px 25px;
@@ -362,7 +318,6 @@ section:nth-child(odd) .repo-card {
     display: flex;
     flex-direction: column;
 }
-
 .project-info h4, .repo-card h4 {
     font-size: 1.25em;
     margin-bottom: 10px;
@@ -370,7 +325,6 @@ section:nth-child(odd) .repo-card {
     color: var(--text-color);
     letter-spacing: -0.3px;
 }
-
 .project-info p, .repo-card .repo-description {
     font-size: 0.95em;
     color: var(--light-accent);
@@ -380,19 +334,77 @@ section:nth-child(odd) .repo-card {
     flex-grow: 1;
 }
 
+
+.game-banner-link {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    background-color: var(--secondary-accent);
+    aspect-ratio: 16 / 9;
+}
+.game-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease, filter var(--transition-speed) ease;
+   
+}
+.game-card:hover .game-banner-img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.game-info {
+    padding: 20px 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.game-title {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    font-weight: 700;
+    color: var(--text-color);
+    letter-spacing: -0.3px;
+}
+.game-description {
+    font-size: 0.95em;
+    color: var(--light-accent);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    font-weight: 300;
+    flex-grow: 1;
+}
+.game-download-btn {
+    display: inline-block;
+    background-color: var(--tertiary-accent);
+    color: var(--text-color);
+    padding: 10px 20px;
+    border-radius: var(--global-radius);
+    text-align: center;
+    font-weight: 500;
+    margin-top: auto;
+    align-self: flex-start;
+    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+.game-download-btn:hover {
+    background-color: var(--highlight-border);
+    color: var(--text-color);
+    transform: translateY(-2px);
+}
+
+
 .repo-card {
     padding: 25px;
     justify-content: space-between;
     min-height: 180px;
 }
-
 .repo-card-content {
     margin-bottom: 20px;
 }
 .repo-card .repo-description i {
     color: var(--tertiary-accent);
 }
-
 .repo-card .repo-meta {
     display: flex;
     flex-wrap: wrap;
@@ -405,26 +417,21 @@ section:nth-child(odd) .repo-card {
     margin-top: auto;
     font-weight: 400;
 }
-
 .repo-meta span {
     display: inline-flex;
     align-items: center;
 }
-.repo-meta .repo-language:empty {
-    display: none;
-}
-
+.repo-meta .repo-language:empty { display: none; }
 .language-color-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     display: inline-block;
     margin-right: 6px;
-    background-color: var(--tertiary-accent); /* Серый для ЧБ */
-    border: 1px solid var(--light-accent); /* Для ЧБ */
+    background-color: var(--tertiary-accent);
+    border: 1px solid var(--light-accent);
 }
 .repo-stars::before { content: "★ "; }
-
 
 #github-repos-container .loading-text,
 #github-repos-container .error-text {
@@ -444,7 +451,6 @@ section:nth-child(odd) .repo-card {
     text-align: center;
     margin-top: 40px;
 }
-
 .github-profile-link a {
     font-size: 1em;
     font-weight: 500;
@@ -456,11 +462,9 @@ section:nth-child(odd) .repo-card {
     transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease;
     display: inline-block;
 }
-/* Для кнопки GitHub на светлом фоне секции */
 section:nth-child(odd) .github-profile-link a {
     background-color: var(--background-color);
 }
-
 .github-profile-link a:hover {
     background-color: var(--secondary-accent);
     border-color: var(--highlight-border);
@@ -470,21 +474,22 @@ section:nth-child(odd) .github-profile-link a:hover {
      background-color: var(--primary-accent);
 }
 
-/* News Section - стили как раньше, но с учетом фона секции */
+
 #news .news-list {
     list-style: none;
     padding: 0;
     max-width: 750px;
     margin: 0 auto;
 }
-
 #news .news-list li {
-    background-color: var(--primary-accent);
     padding: 25px;
     margin-bottom: 20px;
     border-left: 3px solid var(--tertiary-accent);
     border-radius: 0 var(--global-radius) var(--global-radius) 0;
     transition: border-left-color var(--transition-speed) ease, background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+}
+section:not(:nth-child(odd)) #news .news-list li {
+    background-color: var(--primary-accent); 
 }
 section:nth-child(odd) #news .news-list li {
     background-color: var(--background-color);
@@ -492,8 +497,10 @@ section:nth-child(odd) #news .news-list li {
 
 #news .news-list li:hover {
     border-left-color: var(--light-accent);
-    background-color: var(--secondary-accent);
     transform: translateX(5px);
+}
+section:not(:nth-child(odd)) #news .news-list li:hover {
+    background-color: var(--secondary-accent);
 }
 section:nth-child(odd) #news .news-list li:hover {
     background-color: var(--primary-accent);
@@ -505,12 +512,14 @@ section:nth-child(odd) #news .news-list li:hover {
 #news .news-list li p a { color: var(--text-color); font-weight: 500; text-decoration: underline; text-decoration-color: var(--tertiary-accent); text-underline-offset: 3px; }
 #news .news-list li p a:hover { text-decoration-color: var(--light-accent); }
 
-/* Contact Section - стили как раньше */
+
 #contact { text-align: center; }
 #contact p { font-size: 1.1em; color: var(--light-accent); margin-bottom: 25px; }
-.email-link { font-size: 1.2em; font-weight: 500; display: inline-block; padding: 14px 30px; border: 1px solid var(--border-color); border-radius: var(--global-radius); margin: 0 auto 35px auto; background-color: var(--primary-accent); transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease; }
+.email-link { font-size: 1.2em; font-weight: 500; display: inline-block; padding: 14px 30px; border: 1px solid var(--border-color); border-radius: var(--global-radius); margin: 0 auto 35px auto; transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, transform var(--transition-speed) ease; }
+section:not(:nth-child(odd)) .email-link { background-color: var(--primary-accent); }
 section:nth-child(odd) .email-link { background-color: var(--background-color); }
-.email-link:hover { background-color: var(--secondary-accent); border-color: var(--highlight-border); color: var(--text-color); transform: translateY(-2px); }
+.email-link:hover { border-color: var(--highlight-border); color: var(--text-color); transform: translateY(-2px); }
+section:not(:nth-child(odd)) .email-link:hover { background-color: var(--secondary-accent); }
 section:nth-child(odd) .email-link:hover { background-color: var(--primary-accent); }
 
 .social-links { margin-top: 20px; }
@@ -519,38 +528,24 @@ section:nth-child(odd) .email-link:hover { background-color: var(--primary-accen
 .social-links a:hover { color: var(--text-color); transform: scale(1.15); }
 
 
-/* Skeleton Loader for GitHub Repos */
-.repo-card.skeleton {
-    pointer-events: none; /* Нельзя кликнуть на скелетон */
-}
+.repo-card.skeleton { pointer-events: none; }
 .repo-card.skeleton .repo-card-content h4,
 .repo-card.skeleton .repo-card-content p,
 .repo-card.skeleton .repo-meta span {
     background-color: var(--secondary-accent);
-    color: transparent; /* Скрыть текст, если он случайно есть */
+    color: transparent;
     border-radius: 3px;
     animation: pulse-bg 1.5s infinite ease-in-out;
 }
-.repo-card.skeleton .repo-card-content h4 {
-    width: 70%; height: 1.25em; margin-bottom: 12px;
-}
-.repo-card.skeleton .repo-card-content p {
-    width: 100%; height: 0.95em; margin-bottom: 8px;
-}
+.repo-card.skeleton .repo-card-content h4 { width: 70%; height: 1.25em; margin-bottom: 12px; }
+.repo-card.skeleton .repo-card-content p { width: 100%; height: 0.95em; margin-bottom: 8px; }
 .repo-card.skeleton .repo-card-content p:nth-child(2) { width: 80%; }
-.repo-card.skeleton .repo-card-content p:nth-child(3) { width: 90%; height: 0; margin-bottom:0; } /* Скрываем лишние */
-
+.repo-card.skeleton .repo-card-content p:nth-child(3) { width: 90%; height: 0; margin-bottom:0; }
 .repo-card.skeleton .repo-meta { border-top-color: transparent; }
-.repo-card.skeleton .repo-meta span {
-    width: 20%; height: 0.8em;
-}
+.repo-card.skeleton .repo-meta span { width: 20%; height: 0.8em; }
 .repo-card.skeleton .repo-meta span:nth-child(2) { width: 25%; }
 .repo-card.skeleton .repo-meta span:nth-child(3) { width: 15%; }
-.repo-card.skeleton .language-color-dot {
-    background-color: var(--secondary-accent) !important; /* Переопределить инлайн стиль */
-    border-color: transparent;
-}
-
+.repo-card.skeleton .language-color-dot { background-color: var(--secondary-accent) !important; border-color: transparent; }
 
 @keyframes pulse-bg {
     0% { background-color: var(--secondary-accent); }
@@ -558,7 +553,7 @@ section:nth-child(odd) .email-link:hover { background-color: var(--primary-accen
     100% { background-color: var(--secondary-accent); }
 }
 
-/* Scroll to Top Button */
+
 #scrollToTopBtn {
     display: none;
     position: fixed;
@@ -576,42 +571,37 @@ section:nth-child(odd) .email-link:hover { background-color: var(--primary-accen
     transition: background-color var(--transition-speed) ease, opacity 0.3s ease, transform 0.3s ease;
     opacity: 0.8;
 }
-#scrollToTopBtn svg {
-    display: block;
-}
+#scrollToTopBtn svg { display: block; }
 #scrollToTopBtn:hover {
     background-color: var(--tertiary-accent);
     opacity: 1;
     transform: translateY(-2px);
 }
 
-/* Animation Classes for Scroll */
+
 .animate-on-scroll {
     opacity: 0;
     transition-property: opacity, transform;
     transition-duration: var(--animation-duration);
-    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Немного 'bouncy' */
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .animate-on-scroll.is-visible {
     opacity: 1;
-    transform: none !important; /* Убираем начальный transform */
+    transform: none !important;
 }
-
 .fade-in { transform: scale(0.95); }
 .fade-in-up { transform: translateY(40px); }
 .fade-in-left { transform: translateX(-40px); }
 .zoom-in { transform: scale(0.8); }
 
-/* Footer and other styles - как в предыдущей версии */
+
 footer {
     text-align: center;
     padding: 40px 0;
-    /* margin-top: 30px; Удален, т.к. последний разделитель будет перед ним */
     background-color: var(--primary-accent);
     border-top: 1px solid var(--border-color);
-    position: relative; /* Для корректного отображения после последнего разделителя */
+    position: relative;
 }
-
 footer p {
     margin: 0;
     font-size: 0.9em;
@@ -629,9 +619,9 @@ footer .heart {
     50% { transform: scale(1.15); }
 }
 
-/* Адаптивность как раньше, но может потребоваться коррекция для разделителей и canvas */
+
 @media (max-width: 992px) {
-    .project-grid {
+    .project-grid, .game-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 }
@@ -655,9 +645,7 @@ footer .heart {
         flex-wrap: wrap;
         width: 100%;
     }
-    nav ul li {
-        margin: 5px 12px;
-    }
+    nav ul li { margin: 5px 12px; }
     nav ul li a { font-size: 0.9em; }
 
     #hero { height: 70vh; min-height: 420px; }
@@ -665,15 +653,12 @@ footer .heart {
     #hero .subtitle { font-size: 1.1em; }
 
     section { padding: 60px 0; }
-    .section-divider { height: 60px; }
-    .section-divider::before, .section-divider::after { height: 80px; }
-    .section-divider::before { top: -40px; }
-
-
     section h3 { font-size: 1.9em; margin-bottom: 40px; padding-bottom: 15px; }
-    .project-grid { grid-template-columns: 1fr; }
+    .project-grid, .game-grid { grid-template-columns: 1fr; }
     .social-links a svg { width: 24px; height: 24px; }
     #scrollToTopBtn { bottom: 20px; right: 20px; padding: 10px; }
+    .game-title { font-size: 1.2em; }
+    .game-download-btn { padding: 9px 18px; }
 }
 
 @media (max-width: 480px) {
@@ -683,14 +668,12 @@ footer .heart {
     #hero h2 { font-size: 1.9em; }
     #hero .subtitle { font-size: 1em; }
     section h3 { font-size: 1.7em; }
-    .project-info h4, .repo-card h4 { font-size: 1.15em; }
-    .project-info p, .repo-card .repo-description { font-size: 0.9em; }
+    .project-info h4, .repo-card h4, .game-title { font-size: 1.15em; }
+    .project-info p, .repo-card .repo-description, .game-description { font-size: 0.9em; }
     .repo-card .repo-meta { font-size: 0.75em; gap: 6px 10px; }
     .email-link { font-size: 1.1em; padding: 12px 25px; }
     .social-links a svg { width: 22px; height: 22px; }
-    .section-divider { height: 50px; }
-    .section-divider::before, .section-divider::after { height: 70px; }
-    .section-divider::before { top: -35px; }
+    .game-download-btn { padding: 8px 16px; font-size: 0.9em;}
 }
 
 :focus-visible {
